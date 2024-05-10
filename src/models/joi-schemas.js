@@ -29,6 +29,17 @@ export const UserSpecPlus = UserSpec.keys({
   __v: Joi.number(),
 }).label("Full User Details");
 
+export const FirebaseUserCreds = Joi.object()
+  .keys({
+    email: Joi.string().email().example("homer@simpson.com").required(),
+  })
+  .label("Firebase User Credentials");
+
+export const FirebaseSpecPlus = FirebaseUserCreds.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("Full User Details");
+
 export const AuthSpec = Joi.object()
 .keys({
   _id: IdSpec,

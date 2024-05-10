@@ -1,4 +1,6 @@
 import { User } from "./user.js";
+import { FirebaseUser } from "./user.js";
+
 import { placemarkMongoStore } from "./placemark-mongo-store.js";
 
 // export userMongoStore object
@@ -16,6 +18,7 @@ export const userMongoStore = {
     }
     return null;
   },
+  
 
   // function to add a user
   async addUser(user) {
@@ -56,7 +59,40 @@ export const userMongoStore = {
   async deleteAll() {
     await User.deleteMany({});
   },
+  
+    // function to get user by id
+  async getUserById(id) {
+    if (id) {
+      const user = await User.findOne({ _id: id }).lean();
+      return user;
+    }
+    return null;
+  },
+  
+      // function to get user by id
+  async getFirebaseUserById(id) {
+    if (id) {
+      const user = await FirebaseUser.findOne({ _id: id }).lean();
+      return user;
+    }
+    return null;
+  },
+  
+    // function to get user by email
+  async getFirebaseUserByEmail(email) {
+    const user = await FirebaseUser.findOne({ email: email }).lean();
+    return user;
+  },
+  
+  
+   async addFirebaseUser(user) {
+    const newUser = new FirebaseUser(user);
+    const userObj = await newUser.save();
+    const u = await this.getFirebaseUserById(userObj._id);
+    return u;
+  },
 
+  
   // function to update a user
   async updateUser(userId, updatedUser) {
     const currentUser = await User.findOne({ _id: userId });
