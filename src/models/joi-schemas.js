@@ -6,25 +6,27 @@ export const IdSpec = Joi.alternatives().try(Joi.string(), Joi.object()).descrip
 export const UserCredsSpec = Joi.object()
   .keys({
     email: Joi.string().email().example("homer@simpson.com").required(),
-    password: Joi.string().example("secret").required(),
   })
   .label("User Credentials");
 
-export const UserSpec = UserCredsSpec.keys({
-  firstName: Joi.string().example("Homer").required(),
-  lastName: Joi.string().example("Simpson").required(),
-}).label("User");
-
 export const UserUpdateSpec = Joi.object()
   .keys({
-    firstName: Joi.string().example("Homer").required(),
-    lastName: Joi.string().example("Simpson").required(),
     email: Joi.string().email().example("homer@simpsons.com").required(),
-    password: Joi.string().example("secret").required(),
   })
   .label("User Update");
 
-export const UserSpecPlus = UserSpec.keys({
+export const UserSpecPlus = UserCredsSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("Full User Details");
+
+export const FirebaseUserCreds = Joi.object()
+  .keys({
+    email: Joi.string().email().example("homer@simpson.com").required(),
+  })
+  .label("Firebase User Credentials");
+
+export const FirebaseSpecPlus = FirebaseUserCreds.keys({
   _id: IdSpec,
   __v: Joi.number(),
 }).label("Full User Details");
@@ -44,7 +46,6 @@ export const AuthSpec = Joi.object()
 .keys({
   _id: IdSpec,
   email: Joi.string().email().example("homer@simpsons.com").required(),
-  password: Joi.string().example("secret").required(),
 }).label("User details returned via auth");
 
 
@@ -78,6 +79,8 @@ export const PlacemarkPlusSpec = PlacemarkSpec.keys({
 export const ImageSpec = Joi.string();
 
 export const PlacemarkArraySpec = Joi.array().items(PlacemarkPlusSpec).label("Placemark Array");
+
+export const imageSpec = Joi.string().example("https://res.cloudinary.com/dyi6tqhuo/image/upload/v1715532802/placemark/euclldknh0lsn3h7a8zs.png").required();
 
 export const JwtAuth = Joi.object()
   .keys({
