@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
 import { db } from "../models/db.js";
-// eslint-disable-next-line import/no-duplicates
-import { UserSpec, UserUpdateSpec } from "../models/joi-schemas.js";
-// eslint-disable-next-line import/no-duplicates
+import { UserUpdateSpec } from "../models/joi-schemas.js";
 import { UserCredsSpec } from "../models/joi-schemas.js";
 
 dotenv.config();
@@ -29,7 +27,7 @@ export const accountsController = {
   signup: {
     auth: false,
     validate: {
-      payload: UserSpec,
+      payload: UserCredsSpec,
       options: { abortEarly: false },
       failAction: function (request, h, error) {
         return h.view("signup-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
