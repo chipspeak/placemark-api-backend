@@ -18,7 +18,11 @@ export const apiRoutes = [
   { method: "POST", path: "/api/getWeatherForecast", config: placemarkApi.getWeatherForecast },
   
   { method: "POST", path: "/api/users/createViaFirebase", config: userApi.createViaFirebase },
+
   { method: "POST", path: "/api/users/authenticateViaFirebase", config: userApi.authenticateViaFirebase },
+
+    { method: "POST", path: "/api/users/authenticateViaFirebase", config: userApi.authenticateViaFirebase },
+
   
   { method: "PUT", path: "/api/placemarks/{id}", config: placemarkApi.update },
   { method: "POST", path: "/api/users/placemarks", config: placemarkApi.create },

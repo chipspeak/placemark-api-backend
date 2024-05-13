@@ -1,6 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 import { UserSpecPlus, IdSpec, UserArray, JwtAuth, UserCredsSpec, AuthSpec, FirebaseUserCreds, FirebaseSpecPlus } from "../models/joi-schemas.js";
+import { UserSpec, UserSpecPlus, IdSpec, UserArray, JwtAuth, UserCredsSpec, AuthSpec, FirebaseUserCreds, FirebaseSpecPlus } from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 import { createToken, validate, decodeToken } from "./jwt-utils.js";
 import axios from "axios";
@@ -110,7 +111,11 @@ export const userApi = {
     },
     tags: ["api"],
     description: "Authenticate a User",
+
     notes: "If user has valid email, create and return a JWT token",
+
+    notes: "If user has valid email/password, create and return a JWT token",
+
     validate: { payload: FirebaseUserCreds, failAction: validationError },
     response: { schema: JwtAuth, failAction: validationError },
   },
